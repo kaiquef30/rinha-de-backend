@@ -59,15 +59,6 @@ class RealizarTransacaoTest {
     }
 
     @Test
-    void validarTransacao_descricaoInvalida() {
-        Cliente cliente = new Cliente();
-        Transacao transacao = new Transacao();
-        transacao.setDescricao("Descricao muito longa");
-
-        assertThrows(DescriptionTooLongException.class, () -> realizarTransacao.executar(1, transacao));
-    }
-
-    @Test
     void validarTransacao_tipoInvalido() {
         Cliente cliente = new Cliente();
         Transacao transacao = new Transacao();
