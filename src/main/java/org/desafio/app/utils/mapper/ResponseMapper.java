@@ -9,6 +9,7 @@ public class ResponseMapper implements Serializable {
         INVALID_TRANSACTION_TYPE,
         INSUFFICIENT_BALANCE,
         DESCRIPTION_TOO_LONG,
+        INVALID_TRANSACTION_VALUE
     }
 
     private final ErrorCode errorCode;

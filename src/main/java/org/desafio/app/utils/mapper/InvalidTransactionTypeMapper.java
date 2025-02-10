@@ -10,8 +10,8 @@ public class InvalidTransactionTypeMapper implements ExceptionMapper<InvalidTran
 
     @Override
     public Response toResponse(InvalidTransactionType exception) {
-        return Response.status(HttpStatus.BAD_REQUEST_400)
-                .entity(new ResponseMapper(HttpStatus.BAD_REQUEST_400, ResponseMapper.ErrorCode.INVALID_TRANSACTION_TYPE, exception.getMessage()))
+        return Response.status(HttpStatus.UNPROCESSABLE_ENTITY_422)
+                .entity(new ResponseMapper(HttpStatus.UNPROCESSABLE_ENTITY_422, ResponseMapper.ErrorCode.INVALID_TRANSACTION_TYPE, exception.getMessage()))
                 .build();
     }
 }

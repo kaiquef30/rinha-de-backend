@@ -8,6 +8,9 @@ import org.desafio.app.utils.exceptions.ClientNotFoundException;
 import org.desafio.app.utils.exceptions.DescriptionTooLongException;
 import org.desafio.app.utils.exceptions.InsufficientBalanceException;
 import org.desafio.app.utils.exceptions.InvalidTransactionType;
+import org.desafio.app.utils.exceptions.InvalidTransactionValueException;
+
+import java.math.BigDecimal;
 
 public class RealizarTransacao {
 
@@ -24,6 +27,7 @@ public class RealizarTransacao {
     public Cliente executar(int clienteId, Transacao transacao) {
         Cliente cliente = obterCliente(clienteId);
         validarTransacao(transacao);
+        validarValorTransacao(transacao.getValor());
         int novoSaldo = calcularNovoSaldo(cliente, transacao);
         validarSaldo(novoSaldo, cliente.getLimite());
         atualizarCliente(clienteId, cliente, novoSaldo, transacao);
@@ -41,6 +45,13 @@ public class RealizarTransacao {
     private void validarTransacao(Transacao transacao) {
         if (transacao.getDescricao().length() > MAX_DESCRICAO_LENGTH) {
             throw new DescriptionTooLongException();
+        }
+    }
+
+    private void validarValorTransacao(double valor) {
+        BigDecimal bigDecimalValor = BigDecimal.valueOf(valor);
+        if (bigDecimalValor.scale() > 0) {
+            throw new InvalidTransactionValueException();
         }
     }
 

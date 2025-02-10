@@ -10,8 +10,8 @@ public class DescriptionTooLongMappper implements ExceptionMapper<DescriptionToo
 
     @Override
     public Response toResponse(DescriptionTooLongException exception) {
-        return Response.status(HttpStatus.BAD_REQUEST_400)
-                .entity(new ResponseMapper(HttpStatus.BAD_REQUEST_400, ResponseMapper.ErrorCode.DESCRIPTION_TOO_LONG, exception.getMessage()))
+        return Response.status(HttpStatus.UNPROCESSABLE_ENTITY_422)
+                .entity(new ResponseMapper(HttpStatus.UNPROCESSABLE_ENTITY_422, ResponseMapper.ErrorCode.DESCRIPTION_TOO_LONG, exception.getMessage()))
                 .build();
     }
 }

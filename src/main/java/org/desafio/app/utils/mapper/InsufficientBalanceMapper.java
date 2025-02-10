@@ -10,8 +10,8 @@ public class InsufficientBalanceMapper implements ExceptionMapper<InsufficientBa
 
     @Override
     public Response toResponse(InsufficientBalanceException exception) {
-        return Response.status(HttpStatus.FORBIDDEN_403)
-                .entity(new ResponseMapper(HttpStatus.FORBIDDEN_403, ResponseMapper.ErrorCode.INSUFFICIENT_BALANCE, exception.getMessage()))
+        return Response.status(HttpStatus.UNPROCESSABLE_ENTITY_422)
+                .entity(new ResponseMapper(HttpStatus.UNPROCESSABLE_ENTITY_422, ResponseMapper.ErrorCode.INSUFFICIENT_BALANCE, exception.getMessage()))
                 .build();
     }
 }
