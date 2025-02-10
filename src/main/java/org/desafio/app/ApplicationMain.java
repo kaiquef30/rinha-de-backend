@@ -10,6 +10,10 @@ import org.desafio.app.interfaces.controller.ExtratoController;
 import org.desafio.app.interfaces.repository.impl.ClienteRepositoryImpl;
 import org.desafio.app.usecases.ObterExtrato;
 import org.desafio.app.usecases.RealizarTransacao;
+import org.desafio.app.utils.mapper.ClientNotFoundMapper;
+import org.desafio.app.utils.mapper.DescriptionTooLongMappper;
+import org.desafio.app.utils.mapper.InsufficientBalanceMapper;
+import org.desafio.app.utils.mapper.InvalidTransactionTypeMapper;
 
 public class ApplicationMain extends Application<AppConfiguration> {
 
@@ -35,5 +39,9 @@ public class ApplicationMain extends Application<AppConfiguration> {
 
         environment.jersey().register(new ClienteController(realizarTransacao));
         environment.jersey().register(new ExtratoController(obterExtrato));
+        environment.jersey().register(new ClientNotFoundMapper());
+        environment.jersey().register(new DescriptionTooLongMappper());
+        environment.jersey().register(new InvalidTransactionTypeMapper());
+        environment.jersey().register(new InsufficientBalanceMapper());
     }
 }

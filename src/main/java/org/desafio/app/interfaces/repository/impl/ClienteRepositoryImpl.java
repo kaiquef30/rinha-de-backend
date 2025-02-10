@@ -29,13 +29,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLStatements.BUSCAR_CLIENTE)) {
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new Cliente(
-                        resultSet.getInt("id"),
-                        resultSet.getInt("limite"),
-                        resultSet.getInt("saldo")
-                );
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToCliente(resultSet);
+                }
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error fetching client by ID", e);
@@ -75,14 +72,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLStatements.BUSCAR_TRANSACOES)) {
             statement.setInt(1, clienteId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                transacoes.add(new Transacao(
-                        resultSet.getInt("valor"),
-                        resultSet.getString("tipo"),
-                        resultSet.getString("descricao"),
-                        resultSet.getTimestamp("realizada_em").toInstant().atOffset(ZoneOffset.UTC)
-                ));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    transacoes.add(mapResultSetToTransacao(resultSet));
+                }
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error fetching last transactions", e);
@@ -90,11 +83,24 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         return transacoes;
     }
 
+    private Cliente mapResultSetToCliente(ResultSet resultSet) throws SQLException {
+        return new Cliente(
+                resultSet.getInt("id"),
+                resultSet.getInt("limite"),
+                resultSet.getInt("saldo")
+        );
+    }
+
+    private Transacao mapResultSetToTransacao(ResultSet resultSet) throws SQLException {
+        return new Transacao(
+                resultSet.getInt("valor"),
+                resultSet.getString("tipo"),
+                resultSet.getString("descricao"),
+                resultSet.getTimestamp("realizada_em").toInstant().atOffset(ZoneOffset.UTC)
+        );
+    }
+
     private Timestamp getTimestamp(LocalDateTime dateTime) {
-        if (dateTime != null) {
-            return Timestamp.valueOf(dateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        } else {
-            return Timestamp.valueOf(LocalDateTime.now());
-        }
+        return dateTime != null ? Timestamp.valueOf(dateTime) : Timestamp.valueOf(LocalDateTime.now());
     }
 }

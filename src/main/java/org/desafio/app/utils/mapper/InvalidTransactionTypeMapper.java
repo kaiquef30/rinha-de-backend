@@ -1,0 +1,17 @@
+package org.desafio.app.utils.mapper;
+
+import org.desafio.app.utils.exceptions.InvalidTransactionType;
+import org.eclipse.jetty.http.HttpStatus;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+
+public class InvalidTransactionTypeMapper implements ExceptionMapper<InvalidTransactionType> {
+
+    @Override
+    public Response toResponse(InvalidTransactionType exception) {
+        return Response.status(HttpStatus.BAD_REQUEST_400)
+                .entity(new ResponseMapper(HttpStatus.BAD_REQUEST_400, ResponseMapper.ErrorCode.INVALID_TRANSACTION_TYPE, exception.getMessage()))
+                .build();
+    }
+}

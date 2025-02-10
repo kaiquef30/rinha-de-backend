@@ -3,6 +3,7 @@ package org.desafio.app.usecases;
 import org.desafio.app.domain.entities.Cliente;
 import org.desafio.app.domain.entities.Transacao;
 import org.desafio.app.interfaces.repository.ClienteRepository;
+import org.desafio.app.utils.exceptions.ClientNotFoundException;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -22,7 +23,7 @@ public class ObterExtrato {
    public Map<String, Object> executar(int clienteId) {
         Cliente cliente = repository.buscarPorId(clienteId);
         if (cliente == null) {
-            throw new IllegalArgumentException("Cliente não encontrado");
+            throw new ClientNotFoundException();
         }
 
         List<Transacao> transacoes = repository.buscarUltimasTransacoes(clienteId);

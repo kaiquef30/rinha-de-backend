@@ -6,9 +6,9 @@ import org.desafio.app.domain.entities.Cliente;
 import org.desafio.app.domain.entities.Transacao;
 import org.desafio.app.interfaces.repository.ClienteRepository;
 import org.desafio.app.usecases.RealizarTransacao;
-import org.desafio.app.utils.exceptions.ClientNotFound;
-import org.desafio.app.utils.exceptions.InvalidBalance;
-import org.desafio.app.utils.exceptions.InvalidDescription;
+import org.desafio.app.utils.exceptions.ClientNotFoundException;
+import org.desafio.app.utils.exceptions.InsufficientBalanceException;
+import org.desafio.app.utils.exceptions.DescriptionTooLongException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,7 +35,7 @@ class RealizarTransacaoTest {
     void executar_clienteNaoEncontrado() {
         when(repository.buscarPorId(anyInt())).thenReturn(null);
 
-        assertThrows(ClientNotFound.class, () -> realizarTransacao.executar(1, new Transacao()));
+        assertThrows(ClientNotFoundException.class, () -> realizarTransacao.executar(1, new Transacao()));
     }
 
     @Test
@@ -64,7 +64,7 @@ class RealizarTransacaoTest {
         Transacao transacao = new Transacao();
         transacao.setDescricao("Descricao muito longa");
 
-        assertThrows(InvalidDescription.class, () -> realizarTransacao.executar(1, transacao));
+        assertThrows(DescriptionTooLongException.class, () -> realizarTransacao.executar(1, transacao));
     }
 
     @Test
@@ -74,7 +74,7 @@ class RealizarTransacaoTest {
         transacao.setDescricao("Compra");
         transacao.setTipo("x");
 
-        assertThrows(ClientNotFound.class, () -> realizarTransacao.executar(1, transacao));
+        assertThrows(ClientNotFoundException.class, () -> realizarTransacao.executar(1, transacao));
     }
 
     @Test
@@ -90,7 +90,7 @@ class RealizarTransacaoTest {
 
         when(repository.buscarPorId(anyInt())).thenReturn(cliente);
 
-        assertThrows(InvalidBalance.class, () -> realizarTransacao.executar(1, transacao));
+        assertThrows(InsufficientBalanceException.class, () -> realizarTransacao.executar(1, transacao));
     }
 
     @Test

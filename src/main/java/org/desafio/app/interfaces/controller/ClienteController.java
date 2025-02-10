@@ -2,9 +2,7 @@ package org.desafio.app.interfaces.controller;
 
 import org.desafio.app.domain.dtos.SaldoLimiteResponse;
 import org.desafio.app.domain.entities.Transacao;
-import org.desafio.app.interfaces.repository.ClienteRepository;
 import org.desafio.app.usecases.RealizarTransacao;
-import org.desafio.app.utils.exceptions.ClientNotFound;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,9 +25,10 @@ public class ClienteController {
     public Response criarTransacao(
             @PathParam("id") int id,
             Transacao transacao) {
-            realizarTransacao.executar(id, transacao);
-            SaldoLimiteResponse saldoLimiteResponse = realizarTransacao.obterSaldoLimite(id);
-            return Response.ok(saldoLimiteResponse).build();
-        }
+        realizarTransacao.executar(id, transacao);
+        SaldoLimiteResponse saldoLimiteResponse = realizarTransacao.obterSaldoLimite(id);
+        return Response.ok(saldoLimiteResponse).build();
+    }
+
 
 }
