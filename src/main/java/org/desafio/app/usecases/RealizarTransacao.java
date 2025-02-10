@@ -48,12 +48,11 @@ public class RealizarTransacao {
         }
     }
 
-    private void validarValorTransacao(double valor) {
-        BigDecimal bigDecimalValor = BigDecimal.valueOf(valor);
-        if (bigDecimalValor.scale() > 0) {
-            throw new InvalidTransactionValueException();
-        }
-    }
+  private void validarValorTransacao(int valor) {
+     if (valor <= 0) {
+         throw new InvalidTransactionValueException();
+     }
+  }
 
     private int calcularNovoSaldo(Cliente cliente, Transacao transacao) {
         int novoSaldo = cliente.getSaldo();
