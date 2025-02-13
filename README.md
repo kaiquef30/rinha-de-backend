@@ -73,7 +73,7 @@ POST /transacoes
   "tipo": "C"
 }
 ```
-- **Response:** `201 Created`
+- **Response:** `200 Sucess`
 
 ### ➤ Obter Extrato
 ```http
@@ -83,7 +83,7 @@ GET /clientes/{id}/extrato
 ```json
 {
   "saldo": 5000,
-  "transacoes": [
+  "últimas transacoes": [
     { "valor": 1000, "descricao": "Depósito", "tipo": "C" }
   ]
 }
