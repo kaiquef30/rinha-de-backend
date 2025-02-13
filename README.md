@@ -16,7 +16,7 @@ Este projeto foi desenvolvido como parte do desafio **Rinha de Backend 2024**. O
 📦 rinha-backend
 ├── 📁 src
 │   ├── 📁 main
-│   │   ├── 📁 java/com/seuusuario/rinhabackend
+│   │   ├── 📁 java/com/kaiquef30/rinhabackend
 │   │   │   ├── 📁 config        # Configurações da aplicação
 │   │   │   ├── 📁 controllers   # Endpoints REST
 │   │   │   ├── 📁 models        # Modelos de dados
@@ -36,7 +36,7 @@ Antes de iniciar, certifique-se de ter instalado:
 
 ### 📥 Clonando o repositório
 ```bash
-git clone https://github.com/seuusuario/rinha-backend.git
+git clone https://github.com/kaiquef30/rinha-backend.git
 cd rinha-backend
 ```
 
