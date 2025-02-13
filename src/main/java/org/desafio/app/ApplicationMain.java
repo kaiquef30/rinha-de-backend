@@ -34,12 +34,8 @@ public class ApplicationMain extends Application<AppConfiguration> {
         ObterExtrato obterExtrato = new ObterExtrato(clienteRepository);
 
 
+        environment.jersey().packages("org.desafio.app.utils.mapper");
         environment.jersey().register(new ClienteController(realizarTransacao));
         environment.jersey().register(new ExtratoController(obterExtrato));
-        environment.jersey().register(new ClientNotFoundMapper());
-        environment.jersey().register(new DescriptionTooLongMappper());
-        environment.jersey().register(new InvalidTransactionTypeMapper());
-        environment.jersey().register(new InsufficientBalanceMapper());
-        environment.jersey().register(new InvalidTransactionValueMapper());
     }
 }
