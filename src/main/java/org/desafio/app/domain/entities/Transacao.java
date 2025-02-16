@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 public class Transacao {
@@ -18,7 +17,7 @@ public class Transacao {
     @Size(max = 10)
     private String descricao;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private OffsetDateTime realizadaEm;
 
     public Transacao(int valor, String tipo, String descricao, OffsetDateTime realizadaEm) {
@@ -55,8 +54,8 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getRealizadaEm() {
-        return realizadaEm != null ? realizadaEm.toLocalDateTime() : null;
+    public OffsetDateTime getRealizadaEm() {
+        return realizadaEm;
     }
 
     public void setRealizadaEm(OffsetDateTime realizadaEm) {

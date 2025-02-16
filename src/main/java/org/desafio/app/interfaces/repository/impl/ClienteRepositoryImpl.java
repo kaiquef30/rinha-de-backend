@@ -60,7 +60,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
             statement.setInt(2, transacao.getValor());
             statement.setString(3, transacao.getTipo());
             statement.setString(4, transacao.getDescricao());
-            statement.setTimestamp(5, getTimestamp(transacao.getRealizadaEm()));
+            statement.setTimestamp(5, getTimestamp(transacao.getRealizadaEm().toLocalDateTime()));
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error saving transaction", e);
